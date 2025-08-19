@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 import time
-from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
+from tensorflow.keras.applications.densenet import DenseNet121, preprocess_input
 from tensorflow.keras.preprocessing.image import ImageDataGenerator, img_to_array
 from tensorflow.keras.models import Model
 from skimage.feature import hog
@@ -14,7 +14,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 import pandas as pd
 
 # Feature extraction functions (same as before)
-base_model = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+base_model = DenseNet121(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 model = Model(inputs=base_model.input, outputs=base_model.output)
 
 
@@ -45,11 +45,11 @@ validation_dir = '/root/face_project/dataset/dataset/validation'
 test_dir = '/root/face_project/dataset/dataset/Test'  # Path for test data
 
 
-def extract_vgg16_features(img):
+def extract_Densenet_features(img):
     img_resized = cv2.resize(img, (224, 224))  # Resize to 224x224
     img_array = img_to_array(img_resized)  # Convert to numpy array
     img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
-    img_array = preprocess_input(img_array)  # Preprocess for VGG16
+    img_array = preprocess_input(img_array)  # Preprocess for Densenet
 
     features = model.predict(img_array)  # Extract features
     features = features.flatten()  # Flatten the feature map to a 1D vector
@@ -63,9 +63,9 @@ def extract_hog_features(img):
 
 
 def extract_combined_features(img):
-    vgg16_features = extract_vgg16_features(img)
+    Densenet_features = extract_Densenet_features(img)
     hog_features = extract_hog_features(img)
-    combined_features = np.concatenate((vgg16_features, hog_features))  # Concatenate both feature sets
+    combined_features = np.concatenate((Densenet_features, hog_features))  # Concatenate both feature sets
     return combined_features
 
 
@@ -76,7 +76,7 @@ batch_size = 32
 
 train_generator = datagen.flow_from_directory(
     train_dir,  # Path to your training data
-    target_size=(224, 224),  # Resize images to fit VGG16 input size
+    target_size=(224, 224),  # Resize images to fit Densenet input size
     batch_size=batch_size,
     class_mode='binary',  # Or 'categorical' if multi-class classification
     shuffle=True
