@@ -5,7 +5,7 @@ import pandas as pd
 import tensorflow as tf
 import time
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.applications import VGG16
+from tensorflow.keras.applications import DenseNet121
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 
@@ -43,7 +43,7 @@ test_generator = test_datagen.flow_from_directory(
 
 # Feature extraction using VGG16
 def extract_features(generator):
-    model = VGG16(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
+model = DenseNet121(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
     features = []
     labels = []
 
