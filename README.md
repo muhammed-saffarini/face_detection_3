@@ -5,19 +5,16 @@ This repository implements a **face recognition pipeline** that combines:
 - **HOG (Histogram of Oriented Gradients)** for texture features
 - **Extreme Learning Machine (ELM)** as the classifier  
 
-Three different training/optimization approaches are included:
-1. **CSA Optimization** (`file1.py`)
-2. **Manual Grid Search** (`file2.py`)
-3. **Standalone DenseNet + ELM** (`face_elm.py`)
+Two training approaches are included:
+1. **Manual Grid Search** (`file2.py`)
+2. **Standalone DenseNet + ELM** (`face_elm.py`)
 
 ---
 
 ## 📂 Project Structure
 ```
-├── file1.py        # Training with CSA optimization
 ├── file2.py        # Training with GridSearch hyperparameter tuning
 ├── face_elm.py     # Standalone DenseNet + ELM training (5-run evaluation)
-├── CSA.py          # Crow Search Algorithm implementation (required by file1.py)
 ├── ModelELM/       # Output folder for Excel results
 ├── dataset/
 │   ├── final_dataset/   # Training dataset
@@ -39,22 +36,7 @@ pip install numpy pandas tensorflow scikit-learn scikit-image hpelm opencv-pytho
 
 ## ▶️ Running the Code
 
-### **1. CSA Optimization (file1.py)**
-
-```bash
-python file1.py
-```
-
-- Uses **Crow Search Algorithm (CSA)** to optimize ELM hyperparameters (`n_hidden`, `rp`).
-- Extracts DenseNet + HOG features.
-- Saves metrics for training and testing in:
-  ```
-  ModelELM/testing_metrics_ELM_5_runs_train_GridSearch.xlsx
-  ```
-
----
-
-### **2. Grid Search (file2.py)**
+### **1. Grid Search (file2.py)**
 
 ```bash
 python file2.py
@@ -62,11 +44,14 @@ python file2.py
 
 - Runs **manual Grid Search** over ELM hyperparameters.
 - Evaluates best hyperparameters on training and test sets.
-- Saves results to the same Excel file.
+- Saves results to:
+  ```
+  ModelELM/testing_metrics_ELM_5_runs_train_GridSearch.xlsx
+  ```
 
 ---
 
-### **3. Standalone DenseNet + ELM (face_elm.py)**
+### **2. Standalone DenseNet + ELM (face_elm.py)**
 
 ```bash
 python face_elm.py
@@ -101,7 +86,6 @@ Metrics include:
 ## 📌 Notes
 - Update dataset paths if your dataset is stored elsewhere.
 - Ensure `ModelELM/` directory exists, otherwise Excel saving will fail.
-- For CSA optimization, make sure `CSA.py` is in the same directory as `file1.py`.
 
 ---
 
