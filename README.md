@@ -1,4 +1,4 @@
-# Face Recognition with DenseNet + HOG + ELM
+# HDNetELM: A Hybrid Face Detection Framework for Highly Occluded Faces
 
 This repository implements a **face recognition pipeline** that combines:
 - **DenseNet121** for deep feature extraction
