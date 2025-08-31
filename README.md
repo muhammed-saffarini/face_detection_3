@@ -1,93 +1,164 @@
-# Face Recognition with DenseNet + HOG + ELM
+Face Detection and Classification using DenseNet121 + HOG + ELM
+================================================================
 
-This repository implements a **face recognition pipeline** that combines:
-- **DenseNet121** for deep feature extraction
-- **HOG (Histogram of Oriented Gradients)** for texture features
-- **Extreme Learning Machine (ELM)** as the classifier  
+This project implements a face detection and classification system that 
+combines deep learning (DenseNet121) and hand-crafted features (HOG) 
+with a fast classifier (Extreme Learning Machine, ELM).
 
-Two training approaches are included:
-1. **Manual Grid Search** (`file2.py`)
-2. **Standalone DenseNet + ELM** (`face_elm.py`)
+The pipeline is designed for speed and accuracy:
+- DenseNet121 extracts high-level semantic features.
+- HOG extracts local texture and edge-based features.
+- Features are concatenated and classified using an ELM neural network,
+  tuned with Grid Search.
 
----
+This approach leverages the representational power of deep networks with
+the efficiency of ELM, making it suitable for real-time or large-scale 
+face classification tasks.
 
-## 📂 Project Structure
-```
-├── file2.py        # Training with GridSearch hyperparameter tuning
-├── face_elm.py     # Standalone DenseNet + ELM training (5-run evaluation)
-├── ModelELM/       # Output folder for Excel results
-├── dataset/
-│   ├── final_dataset/   # Training dataset
-│   ├── validation/      # Validation dataset
-│   └── Test/            # Testing dataset
-```
+----------------------------------------------------------------
+Key Features
+----------------------------------------------------------------
+- Face Detection & Preprocessing
+  * Resizes input images to 224×224
+  * Normalizes and prepares input for DenseNet and HOG
+- Feature Extraction
+  * DenseNet121 (ImageNet pretrained, no top layers) → Deep semantic features
+  * HOG (Histogram of Oriented Gradients) → Texture/edge features
+  * Features concatenated into a single vector
+- Classifier
+  * Extreme Learning Machine (ELM), one hidden layer
+  * Training is very fast
+- Hyperparameter Optimization
+  * Grid Search over hidden neurons, activation function, and RP
+- Evaluation
+  * Accuracy, Precision, Recall, F1-score, Log Loss
+  * Training & testing time
+- Result Logging
+  * Runs multiple experiments (5 runs)
+  * Saves best model results into Excel
 
----
+----------------------------------------------------------------
+Requirements
+----------------------------------------------------------------
+Install dependencies:
 
-## ⚙️ Requirements
+    pip install numpy opencv-python tensorflow scikit-image scikit-learn hpelm pandas
 
-Install dependencies with:
+----------------------------------------------------------------
+Dataset Structure
+----------------------------------------------------------------
+Organize dataset as follows:
 
-```bash
-pip install numpy pandas tensorflow scikit-learn scikit-image hpelm opencv-python openpyxl
-```
+dataset/
+├── final_dataset/       # Training data
+│   ├── class1/
+│   └── class2/
+├── validation/          # Validation data (optional in current script)
+│   ├── class1/
+│   └── class2/
+└── Test/                # Testing data
+    ├── class1/
+    └── class2/
 
----
+----------------------------------------------------------------
+Usage
+----------------------------------------------------------------
+1. Prepare dataset in the structure above.
+2. Run the script:
 
-## ▶️ Running the Code
+    python main.py
 
-### **1. Grid Search (file2.py)**
+3. Outputs:
+   - Console: Best hyperparameters and metrics per run
+   - Excel: ModelELM/testing_metrics_ELM_5_runs_train_GridSearch.xlsx
 
-```bash
-python file2.py
-```
+----------------------------------------------------------------
+Grid Search Parameters
+----------------------------------------------------------------
+The following parameter grid is used:
 
-- Runs **manual Grid Search** over ELM hyperparameters.
-- Evaluates best hyperparameters on training and test sets.
-- Saves results to:
-  ```
-  ModelELM/testing_metrics_ELM_5_runs_train_GridSearch.xlsx
-  ```
+    param_grid = {
+        'n_neurons': list(range(100, 1000, 50)),  # Hidden neurons
+        'activation': ['sigm'],                   # Activation function
+        'rp': [0.01, 0.1, 1, 10, 100, 1000]       # Regularization parameter
+    }
 
----
+- n_neurons: 100 → 950 in steps of 50
+- activation: 'sigm' (sigmoid)
+- rp: [0.01, 0.1, 1, 10, 100, 1000]
 
-### **2. Standalone DenseNet + ELM (face_elm.py)**
+This produces 108 parameter combinations per run.
 
-```bash
-python face_elm.py
-```
+----------------------------------------------------------------
+Workflow Pipeline
+----------------------------------------------------------------
+Input Image
+      │
+      ▼
+Face Preprocessing (resize 224×224, normalize)
+      │
+      ├──► DenseNet121 → Deep Features
+      ├──► HOG → Texture Features
+      ▼
+Feature Concatenation
+      │
+      ▼
+Standardization (Z-score)
+      │
+      ▼
+Extreme Learning Machine (ELM)
+   ├── Grid Search (neurons, rp, activation)
+   └── Evaluate best model
+      │
+      ▼
+Metrics (Accuracy, Precision, Recall, F1, Loss, Time)
+      │
+      ▼
+Save Results → Excel
 
-- Extracts DenseNet121 features.
-- Trains an ELM classifier with random hidden weights.
-- Runs the experiment **5 times** to ensure reproducibility.
-- Saves training and testing metrics into:
-  ```
-  ModelELM/testing_metrics_ELM_5_runs_train.xlsx
-  ModelELM/testing_metrics_ELM_5_runs_test.xlsx
-  ```
+----------------------------------------------------------------
+Example Results
+----------------------------------------------------------------
 
----
+Sample Grid Search Results (excerpt):
 
-## 📊 Output
+| n_neurons | RP   | Activation | Train Acc | Test Acc | Precision | Recall | F1   | Loss | Train Time (s) | Test Time (s) |
+|-----------|------|------------|-----------|----------|-----------|--------|------|------|----------------|---------------|
+| 100       | 0.01 | sigm       | 0.923     | 0.915    | 0.918     | 0.910  | 0.914| 0.23 | 1.24           | 0.03          |
+| 300       | 0.1  | sigm       | 0.940     | 0.931    | 0.934     | 0.928  | 0.931| 0.19 | 1.56           | 0.04          |
+| 500       | 1    | sigm       | 0.951     | 0.947    | 0.950     | 0.945  | 0.947| 0.14 | 2.02           | 0.05          |
+| 750       | 10   | sigm       | 0.958     | 0.952    | 0.954     | 0.951  | 0.952| 0.11 | 2.34           | 0.06          |
+| 950       | 100  | sigm       | 0.960     | 0.954    | 0.956     | 0.952  | 0.954| 0.10 | 2.89           | 0.07          |
 
-All scripts save results as Excel files in `ModelELM/`.  
-Metrics include:
+(*Values above are illustrative – actual results depend on dataset*)
 
-- Accuracy  
-- Precision  
-- Recall  
-- F1 Score  
-- Loss  
-- Training & Testing Time (seconds)  
-- Confusion Matrix  
+----------------------------------------------------------------
+Best Model (Example)
+----------------------------------------------------------------
+- n_neurons: 750
+- activation: sigm
+- RP: 10
+- Training Accuracy: 0.958
+- Testing Accuracy: 0.952
+- Testing Precision: 0.954
+- Testing Recall: 0.951
+- Testing F1: 0.952
+- Testing Loss: 0.11
+- Training Time: ~2.3s
+- Testing Time: ~0.06s
 
----
+----------------------------------------------------------------
+Future Work
+----------------------------------------------------------------
+- Add multi-class classification for multiple face identities
+- Integrate real-time face detection (OpenCV HaarCascade / MTCNN)
+- Test other activation functions (relu, tanh)
+- Compare with other classifiers (SVM, Random Forest, CNN)
+- Use cross-validation for more robust evaluation
 
-## 📌 Notes
-- Update dataset paths if your dataset is stored elsewhere.
-- Ensure `ModelELM/` directory exists, otherwise Excel saving will fail.
+----------------------------------------------------------------
+Authors
+----------------------------------------------------------------
 
----
-
-## ✨ Citation
-If you use this work, please cite the corresponding paper or repository.
+Purpose: Fast and accurate face recognition using hybrid features 
+(DenseNet + HOG) and ELM classifier with Grid Search optimization.
