@@ -1,9 +1,17 @@
 # HDNetELM: A Hybrid Face Detection Framework for Highly Occluded Faces
 
-This repository implements a **face recognition pipeline** that combines:
-- **DenseNet121** for deep feature extraction
-- **HOG (Histogram of Oriented Gradients)** for texture features
-- **Extreme Learning Machine (ELM)** as the classifier  
+## Description
+This repository contains the implementation of HDNetELM, a hybrid face detection model designed for highly occluded faces. The pipeline integrates:
+
+- **DenseNet121** for deep feature extraction.
+
+- **Histogram of Oriented Gradients (HOG)** for capturing edge/texture information.
+
+- **Extreme Learning Machine (ELM)** as a lightweight and efficient classifier.
+
+- **Canny** edge detection for object proposals.
+
+The model was evaluated on the Niqab dataset (faces with heavy coverings such as niqabs/veils) and a subset of the COCO dataset (non-face images), showing robust performance in detecting occluded faces.
 
 Two training approaches are included:
 1. **Manual Grid Search** (`file2.py`)
