@@ -1,127 +1,137 @@
-Face Detection and Classification using DenseNet121 + HOG + ELM
-================================================================
+# Face Detection and Classification using DenseNet121 + HOG + ELM
 
-This project implements a face detection and classification system that 
-combines deep learning (DenseNet121) and hand-crafted features (HOG) 
-with a fast classifier (Extreme Learning Machine, ELM).
+This project implements a **face detection and classification system** that combines:
+- **Deep Learning** (DenseNet121 for semantic features)
+- **Hand-crafted features** (HOG for texture/edges)
+- **Fast classifier** (Extreme Learning Machine, ELM)
 
-The pipeline is designed for speed and accuracy:
-- DenseNet121 extracts high-level semantic features.
-- HOG extracts local texture and edge-based features.
-- Features are concatenated and classified using an ELM neural network,
-  tuned with Grid Search.
+The approach is designed for **speed and accuracy**, making it suitable for real-time or large-scale face classification.
 
-This approach leverages the representational power of deep networks with
-the efficiency of ELM, making it suitable for real-time or large-scale 
-face classification tasks.
+---
 
-----------------------------------------------------------------
-Key Features
-----------------------------------------------------------------
-- Face Detection & Preprocessing
-  * Resizes input images to 224×224
-  * Normalizes and prepares input for DenseNet and HOG
-- Feature Extraction
-  * DenseNet121 (ImageNet pretrained, no top layers) → Deep semantic features
-  * HOG (Histogram of Oriented Gradients) → Texture/edge features
-  * Features concatenated into a single vector
-- Classifier
-  * Extreme Learning Machine (ELM), one hidden layer
-  * Training is very fast
-- Hyperparameter Optimization
-  * Grid Search over hidden neurons, activation function, and RP
-- Evaluation
-  * Accuracy, Precision, Recall, F1-score, Log Loss
-  * Training & testing time
-- Result Logging
-  * Runs multiple experiments (5 runs)
-  * Saves best model results into Excel
+## 🚀 Pipeline Overview
+1. **Face Preprocessing**
+   - Resize images → `224×224`
+   - Normalize for DenseNet and HOG input
+2. **Feature Extraction**
+   - DenseNet121 (pretrained on ImageNet, no top layers) → deep semantic features
+   - HOG (Histogram of Oriented Gradients) → edge/texture features
+   - Concatenate both features into a single vector
+3. **Classification**
+   - Extreme Learning Machine (ELM), one hidden layer
+   - Hyperparameters tuned using Grid Search
+4. **Evaluation**
+   - Accuracy, Precision, Recall, F1-score, Log Loss
+   - Training & testing time
+5. **Result Logging**
+   - Multiple runs (default = 5)
+   - Best results saved to Excel
 
+---
 
-----------------------------------------------------------------
-Requirements
-----------------------------------------------------------------
-Install dependencies:
+## 🔑 Key Features
+- Hybrid feature extraction (Deep + Handcrafted)
+- Very fast training with ELM
+- Automated **Grid Search** optimization
+- Detailed metrics and logs
+- Scalable to large datasets
 
-    pip install numpy opencv-python tensorflow scikit-image scikit-learn hpelm pandas
+---
 
-----------------------------------------------------------------
-Dataset Structure
-----------------------------------------------------------------
-Organize dataset as follows:
+## 📂 Dataset Structure
 
+Organize your dataset like this:
+
+```
 dataset/
 ├── final_dataset/       # Training data
 │   ├── class1/
 │   └── class2/
-├── validation/          # Validation data (optional in current script)
+├── validation/          # (Optional) validation data
 │   ├── class1/
 │   └── class2/
 └── Test/                # Testing data
     ├── class1/
     └── class2/
+```
 
-----------------------------------------------------------------
-Usage
-----------------------------------------------------------------
-1. Prepare dataset in the structure above.
+---
+
+## ⚙️ Installation
+
+Install required dependencies:
+
+```bash
+pip install numpy opencv-python tensorflow scikit-image scikit-learn hpelm pandas
+```
+
+---
+
+## ▶️ Usage
+
+1. Prepare dataset in the above structure  
 2. Run the script:
 
-    python main.py
+```bash
+python main.py
+```
 
 3. Outputs:
-   - Console: Best hyperparameters and metrics per run
-   - Excel: ModelELM/testing_metrics_ELM_5_runs_train_GridSearch.xlsx
+   - Console: Best hyperparameters + metrics per run
+   - Excel: `ModelELM/testing_metrics_ELM_5_runs_train_GridSearch.xlsx`
 
-----------------------------------------------------------------
-Grid Search Parameters
-----------------------------------------------------------------
-The following parameter grid is used:
+---
 
-    param_grid = {
-        'n_neurons': list(range(100, 1000, 50)),  # Hidden neurons
-        'activation': ['sigm'],                   # Activation function
-        'rp': [0.01, 0.1, 1, 10, 100, 1000]       # Regularization parameter
-    }
+## 🔍 Grid Search Parameters
 
-- n_neurons: 100 → 950 in steps of 50
-- activation: 'sigm' (sigmoid)
-- rp: [0.01, 0.1, 1, 10, 100, 1000]
+We tune the following parameters:
 
-This produces 108 parameter combinations per run.
+```python
+param_grid = {
+    'n_neurons': list(range(100, 1000, 50)),  # Hidden neurons
+    'activation': ['sigm'],                   # Activation function
+    'rp': [0.01, 0.1, 1, 10, 100, 1000]       # Regularization parameter
+}
+```
 
-----------------------------------------------------------------
-Workflow Pipeline
-----------------------------------------------------------------
+- `n_neurons`: 100 → 950 (step 50)  
+- `activation`: `'sigm'` (sigmoid)  
+- `rp`: `[0.01, 0.1, 1, 10, 100, 1000]`  
+
+That gives **108 parameter combinations per run**.
+
+---
+
+## 📊 Workflow Pipeline
+
+```
 Input Image
       │
       ▼
-Face Preprocessing (resize 224×224, normalize)
+Preprocessing (resize 224×224, normalize)
       │
-      ├──► DenseNet121 → Deep Features
-      ├──► HOG → Texture Features
+ ┌────┴─────┐
+ ▼          ▼
+DenseNet121 HOG Features
+Deep Features Texture Features
+ └────┬─────┘
       ▼
 Feature Concatenation
-      │
       ▼
 Standardization (Z-score)
-      │
       ▼
 Extreme Learning Machine (ELM)
-   ├── Grid Search (neurons, rp, activation)
-   └── Evaluate best model
-      │
+   ├── Grid Search
+   └── Best Model
       ▼
-Metrics (Accuracy, Precision, Recall, F1, Loss, Time)
-      │
+Evaluation (Acc, Precision, Recall, F1, Loss, Time)
       ▼
-Save Results → Excel
+Results saved → Excel
+```
 
-----------------------------------------------------------------
-Example Results
-----------------------------------------------------------------
+---
 
-Sample Grid Search Results (excerpt):
+## 📈 Example Results
 
 | n_neurons | RP   | Activation | Train Acc | Test Acc | Precision | Recall | F1   | Loss | Train Time (s) | Test Time (s) |
 |-----------|------|------------|-----------|----------|-----------|--------|------|------|----------------|---------------|
@@ -131,35 +141,32 @@ Sample Grid Search Results (excerpt):
 | 750       | 10   | sigm       | 0.958     | 0.952    | 0.954     | 0.951  | 0.952| 0.11 | 2.34           | 0.06          |
 | 950       | 100  | sigm       | 0.960     | 0.954    | 0.956     | 0.952  | 0.954| 0.10 | 2.89           | 0.07          |
 
-(*Values above are illustrative – actual results depend on dataset*)
+> ⚠️ Values are **illustrative only** – actual results depend on your dataset.
 
-----------------------------------------------------------------
-Best Model (Example)
-----------------------------------------------------------------
-- n_neurons: 750
-- activation: sigm
-- RP: 10
-- Training Accuracy: 0.958
-- Testing Accuracy: 0.952
-- Testing Precision: 0.954
-- Testing Recall: 0.951
-- Testing F1: 0.952
-- Testing Loss: 0.11
-- Training Time: ~2.3s
-- Testing Time: ~0.06s
+---
 
-----------------------------------------------------------------
-Future Work
-----------------------------------------------------------------
-- Add multi-class classification for multiple face identities
-- Integrate real-time face detection (OpenCV HaarCascade / MTCNN)
-- Test other activation functions (relu, tanh)
-- Compare with other classifiers (SVM, Random Forest, CNN)
-- Use cross-validation for more robust evaluation
+## 🏆 Example Best Model
+- `n_neurons`: 750  
+- `activation`: sigm  
+- `rp`: 10  
+- Training Accuracy: 0.958  
+- Testing Accuracy: 0.952  
+- Precision: 0.954  
+- Recall: 0.951  
+- F1: 0.952  
+- Loss: 0.11  
+- Training Time: ~2.3s  
+- Testing Time: ~0.06s  
 
-----------------------------------------------------------------
-Authors
-----------------------------------------------------------------
+---
 
-Purpose: Fast and accurate face recognition using hybrid features 
-(DenseNet + HOG) and ELM classifier with Grid Search optimization.
+## 🔮 Future Work
+- Multi-class classification (multiple face identities)  
+- Real-time detection (OpenCV HaarCascade / MTCNN)  
+- Test more activation functions (`relu`, `tanh`)  
+- Compare with other classifiers (SVM, Random Forest, CNN)  
+- Cross-validation for more robust evaluation  
+
+---
+
+Purpose: *Fast and accurate face recognition using hybrid features (DenseNet + HOG) with ELM classifier optimized by Grid Search.*
