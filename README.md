@@ -20,21 +20,17 @@ Two training approaches are included:
 ---
 
 ## Dataset Information
-* **Niqab Dataset**: Custom dataset containing ~10,000 images with niqab- and veil-covered faces.
+* **Niqab Dataset**: Custom dataset containing ~10,000 images with niqab- and veil-covered faces. DOI/Link: [Replace with Zenodo/Figshare DOI once uploaded]
 
-DOI/Link: [Replace with Zenodo/Figshare DOI once uploaded]
-
-* **COCO Dataset**: Publicly available Common Objects in Context dataset.
-
-URL: https://cocodataset.org
+* **COCO Dataset**: Publicly available Common Objects in Context dataset. URL: https://cocodataset.org
 
 * **Preprocessing**:
 
-- Images resized to 224×224 pixels.
+-- Images resized to 224×224 pixels.
 
-- Contextual labeling used for occluded faces (bounding boxes include surrounding regions).
+-- Contextual labeling used for occluded faces (bounding boxes include surrounding regions).
 
-- Balanced with non-face COCO subset to reduce false positives.
+-- Balanced with non-face COCO subset to reduce false positives.
 
 ## 📂 Project Structure
 ```
