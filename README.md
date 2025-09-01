@@ -73,7 +73,7 @@ pip install numpy opencv-python tensorflow scikit-image scikit-learn hpelm panda
 2. Run the script:
 
 ```bash
-python main.py
+python HogGridSearchElmPhase3.py
 ```
 
 3. Outputs:
