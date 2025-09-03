@@ -162,22 +162,6 @@ That gives **108 parameter combinations per run**.
 - Testing Time: ~0.06s  
 
 ---
-### **2. Standalone DenseNet + ELM (face_elm.py)**
-
-```bash
-python face_elm.py
-```
-
-- Extracts DenseNet121 features.
-- Trains an ELM classifier with random hidden weights.
-- Runs the experiment **5 times** to ensure reproducibility.
-- Saves training and testing metrics into:
-  ```
-  ModelELM/testing_metrics_ELM_5_runs_train.xlsx
-  ModelELM/testing_metrics_ELM_5_runs_test.xlsx
-  ```
-
----
 
 ## 📊 Output
 
