@@ -184,7 +184,47 @@ Metrics include:
 ---
 
 ## ✨ Citation
-If you use this work, please cite the corresponding paper or repository.
+If you plan to use this repository or the Niqab dataset, please include the following cittaions:
+@article{ALASHBI2025101893,
+  title   = {Human face localization and detection in highly occluded unconstrained environments},
+  journal = {Engineering Science and Technology, an International Journal},
+  volume  = {61},
+  pages   = {101893},
+  year    = {2025},
+  issn    = {2215-0986},
+  doi     = {https://doi.org/10.1016/j.jestch.2024.101893},
+  url     = {https://www.sciencedirect.com/science/article/pii/S2215098624002799},
+  author  = {Abdulaziz Alashbi and Abdul Hakim H.M. Mohamed and Ayman A. El-Saleh and Ibraheem Shayea and Mohd Shahrizal Sunar and Zieb Rabie Alqahtani and Faisal Saeed and Bilal Saoud}
+}
+
+@article{Alashbi2022,
+  author    = {A. Alashbi, Abdulaziz and Sunar, Mohd Shahrizal and Alqahtani, Zieb},
+  title     = {Deep Learning CNN for Detecting Covered Faces with Niqab},
+  journal   = {Journal of Information Technology Management},
+  volume    = {14},
+  number    = {Special Issue: 5th International Conference of Reliable Information and Communication Technology (IRICT 2020)},
+  pages     = {114--123},
+  year      = {2022},
+  publisher = {Univrsity Of Tehran Press},
+  issn      = {2980-7972},
+  eissn     = {2980-7972},
+  doi       = {10.22059/jitm.2022.84888},
+  url       = {https://jitm.ut.ac.ir/article_84888.html},
+  eprint    = {https://jitm.ut.ac.ir/article_84888_a3b5d00476d6628dea08b1dcf27a9c27.pdf}
+}
+
+@InProceedings{10.1007/978-3-030-33582-3_20,
+  author    = {Alashbi, Abdulaziz Ali Saleh and Sunar, Mohd Shahrizal},
+  editor    = {Saeed, Faisal and Mohammed, Fathey and Gazem, Nadhmi},
+  title     = {Occluded Face Detection, Face in Niqab Dataset},
+  booktitle = {Emerging Trends in Intelligent Computing and Informatics},
+  year      = {2020},
+  publisher = {Springer International Publishing},
+  address   = {Cham},
+  pages     = {209--215},
+  isbn      = {978-3-030-33582-3}
+}
+
 
 ## 📜 License
 This repository is released as open access:
