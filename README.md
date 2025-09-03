@@ -232,5 +232,10 @@ If you plan to use this repository or the Niqab dataset, please include the foll
 This repository is released as open access:
 
 - **Code**: Licensed under the [MIT License](LICENSE), allowing free use, modification, and redistribution with attribution.  
-- **Dataset (Niqab Dataset)**: Licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). You are free to share and adapt the dataset as long as appropriate credit is given.  
+- **Dataset (Niqab Dataset)**: Licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). You are free to share and adapt the dataset as long as appropriate credit is given.
+
+## 🤝 Contribution Guidelines
+This repository is not open for external contributions.  
+If you have questions, feedback, or issues, please open an **Issue** in the GitHub tracker.  
+
 
