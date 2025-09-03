@@ -57,15 +57,31 @@ dataset/
 
 ---
 
-## 📂 Project Structure
+## 📊 Workflow Pipeline
+
 ```
-├── file2.py        # Training with GridSearch hyperparameter tuning
-├── face_elm.py     # Standalone DenseNet + ELM training (5-run evaluation)
-├── ModelELM/       # Output folder for Excel results
-├── dataset/
-│   ├── final_dataset/   # Training dataset
-│   ├── validation/      # Validation dataset
-│   └── Test/            # Testing dataset
+Input Image
+      │
+      ▼
+Preprocessing (resize 224×224, normalize)
+      │
+ ┌────┴─────┐
+ ▼          ▼
+DenseNet121 HOG Features
+Deep Features Texture Features
+ └────┬─────┘
+      ▼
+Feature Concatenation
+      ▼
+Standardization (Z-score)
+      ▼
+Extreme Learning Machine (ELM)
+   ├── Grid Search
+   └── Best Model
+      ▼
+Evaluation (Acc, Precision, Recall, F1, Loss, Time)
+      ▼
+Results saved → Excel
 ```
 
 ---
@@ -117,34 +133,6 @@ That gives **108 parameter combinations per run**.
 
 ---
 
-## 📊 Workflow Pipeline
-
-```
-Input Image
-      │
-      ▼
-Preprocessing (resize 224×224, normalize)
-      │
- ┌────┴─────┐
- ▼          ▼
-DenseNet121 HOG Features
-Deep Features Texture Features
- └────┬─────┘
-      ▼
-Feature Concatenation
-      ▼
-Standardization (Z-score)
-      ▼
-Extreme Learning Machine (ELM)
-   ├── Grid Search
-   └── Best Model
-      ▼
-Evaluation (Acc, Precision, Recall, F1, Loss, Time)
-      ▼
-Results saved → Excel
-```
-
----
 
 ## 📈 Example Results
 
