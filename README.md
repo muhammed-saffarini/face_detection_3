@@ -99,17 +99,21 @@ pip install numpy opencv-python openpyxl tensorflow scikit-image scikit-learn hp
 
 ## ▶️ Usage
 
-1. Prepare dataset in the above structure  
-2. Run the script:
-
+### 1. Prepare dataset in the above structure  
+### 2. Run HDNetELM (Hybrid HOG + DenseNet121 + ELM)
+Run the main hybrid pipeline with grid search over ELM parameters:
 ```bash
 python HogGridSearchElmPhase3.py
 ```
-
 3. Outputs:
    - Console: Best hyperparameters + metrics per run
    - Excel: `ModelELM/testing_metrics_ELM_5_runs_train_GridSearch.xlsx`
 
+### 3. CNN Comparisons (CodeVersion1.py)
+To investigate and compare different advanced CNN models, use:
+```bash
+python CodeVersion1.py
+```
 ---
 
 ## 🔍 Grid Search Parameters
