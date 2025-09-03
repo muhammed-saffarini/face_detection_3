@@ -114,6 +114,8 @@ To investigate and compare different advanced CNN models, use:
 ```bash
 python CodeVersion1.py
 ```
+Supported models are:
+VGG16, VGG19, ResNet50, InceptionV3, ResNet101, ResNet152, EfficientNetB0, DenseNet121, NASNetLarge
 ---
 
 ## 🔍 Grid Search Parameters
