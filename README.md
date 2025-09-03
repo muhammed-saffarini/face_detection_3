@@ -185,3 +185,10 @@ Metrics include:
 
 ## ✨ Citation
 If you use this work, please cite the corresponding paper or repository.
+
+## 📜 License
+This repository is released as open access:
+
+- **Code**: Licensed under the [MIT License](LICENSE), allowing free use, modification, and redistribution with attribution.  
+- **Dataset (Niqab Dataset)**: Licensed under the [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/). You are free to share and adapt the dataset as long as appropriate credit is given.  
+
