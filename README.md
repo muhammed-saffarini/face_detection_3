@@ -184,7 +184,9 @@ Metrics include:
 ---
 
 ## ✨ Citation
-If you plan to use this repository or the Niqab dataset, please include the following cittaions:
+If you plan to use this repository or the Niqab dataset, please include the following citations:
+
+```bibtex
 @article{ALASHBI2025101893,
   title   = {Human face localization and detection in highly occluded unconstrained environments},
   journal = {Engineering Science and Technology, an International Journal},
